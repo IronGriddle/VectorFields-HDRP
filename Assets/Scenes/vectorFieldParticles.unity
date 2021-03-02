@@ -12078,7 +12078,7 @@ MonoBehaviour:
   size: 10
   resolution: 10
   m_WrapMode: 1
-  m_FilterMode: 0
+  m_FilterMode: 2
   m_GenerateMipMaps: 0
   m_AnisoLevel: 1
 --- !u!114 &2088438371

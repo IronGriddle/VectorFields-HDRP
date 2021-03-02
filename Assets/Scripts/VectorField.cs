@@ -60,9 +60,6 @@ public class VectorField : MonoBehaviour
     //Update forces at each position.
     protected virtual void UpdateForces()
     {
-        Stopwatch stopWatch = new Stopwatch();
-
-        stopWatch.Start();
         forces = new List<Vector3>(new Vector3[positions.Count]);
 
         //Calculate force at each voxel. 
@@ -70,29 +67,20 @@ public class VectorField : MonoBehaviour
         Parallel.For(0, positions.Count,
             i =>
             forces[i] = function3D.CalculateAtPosition(positions[i]));
-        stopWatch.Stop();
-        print("Calculation time non-sequential: " + stopWatch.Elapsed);
-        stopWatch.Reset();
-
 
         //Sequential Version
 
-        stopWatch.Start();
-        forces = new List<Vector3>();
-        foreach (var position in positions)
-        {
-            //While they may have all parameters filled out (xyz), unused parameters will simply be ignored.
-            forces.Add(function3D.CalculateAtPosition(position));
-        }
-        stopWatch.Stop();
-        print("Calculation time sequential: " + stopWatch.Elapsed);
-
+        //forces = new List<Vector3>();
+        //foreach (var position in positions)
+        //{
+        //    //While they may have all parameters filled out (xyz), unused parameters will simply be ignored.
+        //    forces.Add(function3D.CalculateAtPosition(position));
+        //}
 
         //DO NOT USE FOREACH VERSION. DOES NOT MAINTAIN INDEX IN LIST.
         //Parallel.ForEach(positions, pos => forces.Add(function3D.CalculateAtPosition(pos)));
     }
 
-    //TODO: figure out where to put these height width and depth numbers.
     protected virtual void UpdatePositions()
     {
         //First initialize a list of positions.
@@ -102,8 +90,8 @@ public class VectorField : MonoBehaviour
         //First calculate the step size.
         float step = size / resolution;
 
-        //Then create a list of size n
-        positions = new List<Vector3>(new Vector3[GetNCalculated()]);
+        //Then create a list of positions to calculate force at
+        positions = new List<Vector3>();
         
         //Iterate over a cube of length size * 2
         for (float z = -size; z < size; z+= step)
@@ -122,7 +110,7 @@ public class VectorField : MonoBehaviour
     protected virtual void UpdateTexture3D()
     {   
         //Creating a new cubic Texture3D of proper size. 
-        texture = new Texture3D(resolution*2, resolution * 2, resolution * 2, TextureFormat.RGBAFloat, m_GenerateMipMaps);
+        texture = new Texture3D(resolution*2, resolution * 2, resolution * 2, TextureFormat.RGBAHalf, m_GenerateMipMaps);
         texture.wrapMode = m_WrapMode;       //TextureWrapMode.Clamp
         texture.filterMode = m_FilterMode;   //FilterMode.Trilinear
         texture.anisoLevel = m_AnisoLevel;   //1 
