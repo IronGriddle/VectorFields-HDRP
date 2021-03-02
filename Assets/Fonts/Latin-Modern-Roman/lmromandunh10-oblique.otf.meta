@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: d20ee9360b294f54b89acdc1c0cae2e3
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Latin Modern Roman Dunhill
+  fontNames:
+  - Latin Modern Roman Dunhill
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 6247618d9e389e34cacf9c7ea548ce06, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

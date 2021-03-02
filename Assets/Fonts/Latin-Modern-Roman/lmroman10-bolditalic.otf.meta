@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: f30e5084e23aca14a8cb2c34aaee3a41
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Latin Modern Roman
+  fontNames:
+  - Latin Modern Roman
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: a0a9ac6dadda2674f8b06f2f4c7529ca, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

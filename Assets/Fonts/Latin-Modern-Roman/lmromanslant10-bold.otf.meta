@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: edef0ae90f6a4cf49b75fe47735f6dce
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Latin Modern Roman Slanted
+  fontNames:
+  - Latin Modern Roman Slanted
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 9d1002e5a67cffa44a799da2c5987af3, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
