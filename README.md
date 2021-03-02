@@ -1,2 +1,3 @@
 # VectorFields-HDRP
-Project-Ready
+Project-Ready. Import me into Unity if you'd like
+
