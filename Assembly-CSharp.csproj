@@ -63,10 +63,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Controllers\CameraOrbit.cs" />
-    <Compile Include="Assets\Scripts\Controllers\FixedCameraController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\VFXFieldSettings.cs" />
-    <Compile Include="Assets\Scripts\Controllers\VFXParticleSettings.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Camera\CameraOrbit.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Camera\FixedCameraController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\VFX\VFXFieldSettings.cs" />
+    <Compile Include="Assets\Scripts\Controllers\VFX\VFXParticleSettings.cs" />
     <Compile Include="Assets\Scripts\ErrorListener.cs" />
     <Compile Include="Assets\Scripts\Function3D.cs" />
     <Compile Include="Assets\Scripts\ParametricLine.cs" />
@@ -75,8 +75,6 @@
     <Compile Include="Assets\Scripts\UI\UIColorer.cs" />
     <Compile Include="Assets\Scripts\Util\ExprUtils.cs" />
     <Compile Include="Assets\Scripts\Util\ExpressionParser.cs" />
-    <Compile Include="Assets\Scripts\Util\FunctionEval.cs" />
-    <Compile Include="Assets\Scripts\Util\SimpleCameraController.cs" />
     <Compile Include="Assets\Scripts\Util\Texture3DPreviewInInspector.cs" />
     <Compile Include="Assets\Scripts\Util\VectorField_Exporter.cs" />
     <Compile Include="Assets\Scripts\VectorField.cs" />

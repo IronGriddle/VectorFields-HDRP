@@ -39,7 +39,7 @@ public class pCacheExporter : MonoBehaviour
 
     public static string GetString(List<Vector3> positions, List<Vector3> velocities)
     {
-        //Input Checking
+        //Input Checking Positions must equal velocities.
         if (positions.Count != velocities.Count)
         { 
             throw new System.ArgumentException("positions.Count != velocities.Count");
@@ -62,11 +62,10 @@ public class pCacheExporter : MonoBehaviour
             body += "\n";
         }
 
-        
-
         return header + body;
     }
 
+    //Save in ASCII Format.
     public static void SavePCacheString(string pCache)
     {
         byte[] bytes = Encoding.ASCII.GetBytes(pCache);

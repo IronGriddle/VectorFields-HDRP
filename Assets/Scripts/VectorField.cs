@@ -1,64 +1,59 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using B83.ExpressionParser;
-using UnityEditor;
 using System.Threading.Tasks;
-using System.Diagnostics;
 
 public class VectorField : MonoBehaviour
 {
-    //This thing looks nasty.
-    //I must fix it.
 
     //Deals with calculations in 3D space.
-    //Also is set to calculate certain functions.
+    //Also contains inner functions which can be manipulated.
     public Function3D function3D;
 
-    public Texture3D texture;
+    public Texture3D texture3D;
     protected List<Vector3> forces;
     protected List<Vector3> positions;
 
-    //Size determines where points are calculated at. Such as f(1,0), f(2,0) -> f(10,0)
-    public float size = 10;
+    //Length from the center of a cube.
+    //Default size means the cube calculates f(-10,-10,-10) -> f(10,10,10)
+    public float sizeOfCube = 10;
 
     //Resolution determines how many points are calculated. The true resolution is resolution cubed and multiplied by 8
     //This is due to the nature of cubes.
-    public int resolution = 100;
+    public int nonCubedResolution = 10;
 
-    //Clamping to prevent repetition
-    public TextureWrapMode m_WrapMode = TextureWrapMode.Clamp;
-
-    //Trilinear for voxels.
-    public FilterMode m_FilterMode = FilterMode.Trilinear;
+    
+    private TextureWrapMode m_WrapMode = TextureWrapMode.Clamp; //Clamping textureto prevent repetition
+    private FilterMode m_FilterMode = FilterMode.Trilinear;     //Trilinear for voxel interpolation.
     public bool m_GenerateMipMaps = false;
     public int m_AnisoLevel = 1;
 
     private void Awake()
     {
-        //get the component attatched.
+        //get the Function3D component attatched or generate if null.
         function3D = gameObject.GetComponent<Function3D>();
+        if (function3D == null)
+        {
+            //Generate and set parameters of function3D to x y z.
+            function3D = gameObject.AddComponent<Function3D>();
+            function3D.parameters = new List<string>() { "x", "y", "z" };
+        }
     }
     private void Start()
     {
+        //Initialize Position, forces, and texture3D to defaults.
         UpdateVectorField();
     }
 
-    public int GetNCalculated()
-    {
-        //Calculate one octant of size, then multiply by 8 to return the amount to be calculated.
-        return resolution * resolution * resolution * 8;
-    }
-
+    //Update the entire system.
     public virtual void UpdateVectorField()
     {
-        UpdatePositions();
-        UpdateForces();
-        UpdateTexture3D();
+        SetPositions();
+        SetForces();
+        SetTexture3D();
     }
 
     //Update forces at each position.
-    protected virtual void UpdateForces()
+    protected virtual void SetForces()
     {
         forces = new List<Vector3>(new Vector3[positions.Count]);
 
@@ -77,28 +72,25 @@ public class VectorField : MonoBehaviour
         //    forces.Add(function3D.CalculateAtPosition(position));
         //}
 
-        //DO NOT USE FOREACH VERSION. DOES NOT MAINTAIN INDEX IN LIST.
+        //FOREACH VERSION. DOES NOT MAINTAIN INDEX IN LIST.
         //Parallel.ForEach(positions, pos => forces.Add(function3D.CalculateAtPosition(pos)));
     }
 
-    protected virtual void UpdatePositions()
+    //Possible bug here with step.
+    protected virtual void SetPositions()
     {
-        //First initialize a list of positions.
-        //This list will be of size GetNCalculated();
-
-
         //First calculate the step size.
-        float step = size / resolution;
+        float step = sizeOfCube / nonCubedResolution;
 
         //Then create a list of positions to calculate force at
         positions = new List<Vector3>();
         
-        //Iterate over a cube of length size * 2
-        for (float z = -size; z < size; z+= step)
+        //Then generate and add points to positions
+        for (float z = -sizeOfCube; z < sizeOfCube; z+= step)
         {
-            for (float y = -size; y < size; y+= step)
+            for (float y = -sizeOfCube; y < sizeOfCube; y+= step)
             {
-                for (float x = -size; x < size; x++)
+                for (float x = -sizeOfCube; x < sizeOfCube; x++)
                 {
                     positions.Add(new Vector3(x, y, z));
                 }
@@ -106,17 +98,24 @@ public class VectorField : MonoBehaviour
         }
     }
 
+    //Calculate one octant of size, then multiply by 8 to return the amount to be calculated.
+    public int GetNCalculated()
+    {
+        return nonCubedResolution * nonCubedResolution * nonCubedResolution * 8;
+    }
+
     //Update the Texture 3D describing this vector field.
-    protected virtual void UpdateTexture3D()
+    protected virtual void SetTexture3D()
     {   
         //Creating a new cubic Texture3D of proper size. 
-        texture = new Texture3D(resolution*2, resolution * 2, resolution * 2, TextureFormat.RGBAHalf, m_GenerateMipMaps);
-        texture.wrapMode = m_WrapMode;       //TextureWrapMode.Clamp
-        texture.filterMode = m_FilterMode;   //FilterMode.Trilinear
-        texture.anisoLevel = m_AnisoLevel;   //1 
+        texture3D = new Texture3D(nonCubedResolution*2, nonCubedResolution * 2, nonCubedResolution * 2, TextureFormat.RGBAHalf, m_GenerateMipMaps);
+        texture3D.wrapMode = m_WrapMode;       //TextureWrapMode.Clamp
+        texture3D.filterMode = m_FilterMode;   //FilterMode.Trilinear
+        texture3D.anisoLevel = m_AnisoLevel;   //1 
         //Creating color array of size forces.count
         Color[] colors = new Color[forces.Count];
 
+        //Filling Color array with forces.
         for (int i = 0; i < forces.Count; i++)
         {
             Color c;
@@ -125,8 +124,9 @@ public class VectorField : MonoBehaviour
             colors[i] = c;
         }
 
-        texture.SetPixels(colors);
-        texture.Apply(true, true);
+        //Setting voxels of texture.
+        texture3D.SetPixels(colors);
+        texture3D.Apply(true, true);
     }
 
 }

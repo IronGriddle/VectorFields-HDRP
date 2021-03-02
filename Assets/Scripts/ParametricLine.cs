@@ -4,9 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//TODO: Clean up this class and remove inheritance from VectorField.
 public class ParametricLine : VectorField
 {
-
     public Function3D delegate3D;
 
     public float tMin = 10;
@@ -23,7 +24,7 @@ public class ParametricLine : VectorField
     //Velocity is calculated at r'(t) = <f'(t),g'(t),h'(t)>
 
     //TODO: Check for possible infinite loops from tMax and tMin.
-    protected override void UpdatePositions()
+    protected override void SetPositions()
     {
         positions = new List<Vector3>();
         float step = resolution / (tMax - tMin);//step is set so that we get the correct resolution.
@@ -35,7 +36,7 @@ public class ParametricLine : VectorField
     }
 
     //Velocity is calculated at r'(t) = <f'(t),g'(t),h'(t)>
-    protected override void UpdateForces()
+    protected override void SetForces()
     {
         forces = new List<Vector3>();
         float step = resolution / (tMax - tMin);
