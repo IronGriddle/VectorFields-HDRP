@@ -8,7 +8,6 @@ public class Function3D : MonoBehaviour
     //Should any error occur during parsing., it will be accessible from here.
     public string Error = "";
 
-
     //Possible parameters, eg f(t) or f(x,y,z)
     //Default is x y z. Should be more than enough. Unused parameters will be ignored.
     //If a specified parameter does not exist in an equation it will be ignored.
@@ -25,7 +24,6 @@ public class Function3D : MonoBehaviour
         SetExprZ("x");
         SetExprY("y");
     }
-
 
     //Set the xExpr delegate with the proper string. eg : "sin(x) + cos(y)"
     public void SetExprX(string expression)

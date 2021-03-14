@@ -23,7 +23,7 @@ public class VectorField : MonoBehaviour
 
     
     private TextureWrapMode m_WrapMode = TextureWrapMode.Clamp; //Clamping textureto prevent repetition
-    private FilterMode m_FilterMode = FilterMode.Trilinear;     //Trilinear for voxel interpolation.
+    private FilterMode m_FilterMode = FilterMode.Point;     //Trilinear for voxel interpolation.
     public bool m_GenerateMipMaps = false;
     public int m_AnisoLevel = 1;
 

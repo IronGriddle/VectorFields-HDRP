@@ -10,6 +10,6 @@ ScriptedImporter:
   script: {fileID: 11500000, guid: 336709e79a7c5ad4f8611c5f160d050b, type: 3}
   outputFormat: 1
   wrapMode: 1
-  filterMode: 1
-  generateMipMaps: 0
+  filterMode: 0
+  generateMipMaps: 1
   anisoLevel: 1
