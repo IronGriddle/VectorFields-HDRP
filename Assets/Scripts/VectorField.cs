@@ -52,6 +52,7 @@ public class VectorField : MonoBehaviour
         SetTexture3D();
     }
 
+
     //Update forces at each position.
     protected virtual void SetForces()
     {
@@ -61,7 +62,7 @@ public class VectorField : MonoBehaviour
         //Using for loop to maintain position in list.
         Parallel.For(0, positions.Count,
             i =>
-            forces[i] = function3D.CalculateAtPosition(positions[i]));
+            forces[i] = function3D.CalculateAtVector3(positions[i]));
 
         //Sequential Version
 
@@ -69,11 +70,11 @@ public class VectorField : MonoBehaviour
         //foreach (var position in positions)
         //{
         //    //While they may have all parameters filled out (xyz), unused parameters will simply be ignored.
-        //    forces.Add(function3D.CalculateAtPosition(position));
+        //    forces.Add(function3D.CalculateAtXYZ(position));
         //}
 
         //FOREACH VERSION. DOES NOT MAINTAIN INDEX IN LIST.
-        //Parallel.ForEach(positions, pos => forces.Add(function3D.CalculateAtPosition(pos)));
+        //Parallel.ForEach(positions, pos => forces.Add(function3D.CalculateAtXYZ(pos)));
     }
 
     //Possible bug here with step.
