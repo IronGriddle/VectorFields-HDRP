@@ -21,11 +21,11 @@ public class VectorField : MonoBehaviour
     //This is due to the nature of cubes.
     public int nonCubedResolution = 10;
 
-    
+
     private TextureWrapMode m_WrapMode = TextureWrapMode.Clamp; //Clamping textureto prevent repetition
     private FilterMode m_FilterMode = FilterMode.Point;     //Trilinear for voxel interpolation.
-    public bool m_GenerateMipMaps = false;
-    public int m_AnisoLevel = 1;
+    public bool m_GenerateMipMaps = true;
+    public int m_AnisoLevel = 16;
 
     private void Awake()
     {
@@ -84,13 +84,13 @@ public class VectorField : MonoBehaviour
 
         //Then create a list of positions to calculate force at
         positions = new List<Vector3>();
-        
+
         //Then generate and add points to positions
-        for (float z = -sizeOfCube; z < sizeOfCube; z+= step)
+        for (float z = -sizeOfCube; z < sizeOfCube; z += step)
         {
-            for (float y = -sizeOfCube; y < sizeOfCube; y+= step)
+            for (float y = -sizeOfCube; y < sizeOfCube; y += step)
             {
-                for (float x = -sizeOfCube; x < sizeOfCube; x++)
+                for (float x = -sizeOfCube; x < sizeOfCube; x += step)
                 {
                     positions.Add(new Vector3(x, y, z));
                 }
@@ -106,9 +106,9 @@ public class VectorField : MonoBehaviour
 
     //Update the Texture 3D describing this vector field.
     protected virtual void SetTexture3D()
-    {   
+    {
         //Creating a new cubic Texture3D of proper size. 
-        texture3D = new Texture3D(nonCubedResolution*2, nonCubedResolution * 2, nonCubedResolution * 2, TextureFormat.RGBAHalf, m_GenerateMipMaps);
+        texture3D = new Texture3D(nonCubedResolution * 2, nonCubedResolution * 2, nonCubedResolution * 2, TextureFormat.RGBAFloat, m_GenerateMipMaps);
         texture3D.wrapMode = m_WrapMode;       //TextureWrapMode.Clamp
         texture3D.filterMode = m_FilterMode;   //FilterMode.Trilinear
         texture3D.anisoLevel = m_AnisoLevel;   //1 
@@ -120,7 +120,7 @@ public class VectorField : MonoBehaviour
         {
             Color c;
             Vector3 force = forces[i];
-            c = new Color(force.x, force.y, force.z);
+            c = new Color(force.x, force.y, force.z, 1); //TESTING
             colors[i] = c;
         }
 

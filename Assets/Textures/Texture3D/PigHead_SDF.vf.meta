@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a9547a7d8733a344b822f7b7024b3543
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 336709e79a7c5ad4f8611c5f160d050b, type: 3}
+  outputFormat: 1
+  wrapMode: 1
+  filterMode: 0
+  generateMipMaps: 0
+  anisoLevel: 1

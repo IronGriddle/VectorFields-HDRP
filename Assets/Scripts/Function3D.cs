@@ -20,9 +20,9 @@ public class Function3D : MonoBehaviour
 
     private void Awake()
     {
-        SetExprX("z");
-        SetExprZ("x");
-        SetExprY("y");
+        SetExprX("x/(x^2+y^2)");
+        SetExprZ("(-y)/(x^2+y^2)");
+        SetExprY("0");
     }
 
     //Set the xExpr delegate with the proper string. eg : "sin(x) + cos(y)"
@@ -34,6 +34,7 @@ public class Function3D : MonoBehaviour
         }
         catch (ExpressionParser.ParseException exception)//Should an error occur, set the expression equal to 0.
         {
+            Debug.LogError(exception);
             Error = exception.ToString();
             xExpr = Expression.Parse("x").ToDelegate(parameters.ToArray());
         }
@@ -48,6 +49,7 @@ public class Function3D : MonoBehaviour
         }
         catch (ExpressionParser.ParseException exception)
         {
+            Debug.LogError(exception);
             Error = exception.ToString();
             yExpr = Expression.Parse("x").ToDelegate(parameters.ToArray());
         }
@@ -62,6 +64,7 @@ public class Function3D : MonoBehaviour
         }
         catch (ExpressionParser.ParseException exception) 
         {
+            Debug.LogError(exception);
             Error = exception.ToString();
             zExpr = Expression.Parse("x").ToDelegate(parameters.ToArray());
         }
@@ -82,8 +85,7 @@ public class Function3D : MonoBehaviour
         }
     }
 
-    //Calculates at a position.
-    //Given that the number of parameters defined is three. Eg: f(x,y,z)
+    //Calculates at a position given that the number of parameters is three. Eg: f(x,y,z)
     public Vector3 CalculateAtPosition(Vector3 position)
     {
         if (parameters.Count == 3)
@@ -92,7 +94,7 @@ public class Function3D : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("CalculateAtPosition is calculating an expression with more or less than 3 parameters and will try calculate for the first three parameters. Did you mean to use CalculateAtT()?");
+            Debug.LogWarning("CalculateAtPosition is calculating an expression with more or less than 3 parameters. Did you mean to use CalculateAtT()?");
             return new Vector3((float)xExpr(position.x, position.y, position.z), (float)yExpr(position.x, position.y, position.z), (float)zExpr(position.x, position.y, position.z));
         }
     }

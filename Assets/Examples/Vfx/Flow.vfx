@@ -194,10 +194,10 @@ MonoBehaviour:
   - title: Flow Sample
     position:
       serializedVersion: 2
-      x: -1325
+      x: -1664
       y: 469
-      width: 1166
-      height: 321
+      width: 1505
+      height: 355
     contents:
     - model: {fileID: 8926484042661614547}
       id: 0
@@ -246,9 +246,9 @@ MonoBehaviour:
   categories: []
   uiBounds:
     serializedVersion: 2
-    x: -1594
+    x: -1664
     y: -369
-    width: 2741
+    width: 2811
     height: 1719
 --- !u!114 &114350483966674976
 MonoBehaviour:
@@ -2367,7 +2367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
-  m_UIPosition: {x: -1279, y: 603}
+  m_UIPosition: {x: -1639, y: 627}
   m_UICollapsed: 0
   m_UISuperCollapsed: 1
   m_InputSlots: []
@@ -6019,7 +6019,7 @@ MonoBehaviour:
     linkedSlots:
     - outputSlot: {fileID: 8926484042661614981}
       inputSlot: {fileID: 8926484042661614869}
-    position: {x: -1228, y: 549}
+    position: {x: -1488, y: 534}
     expandedSlots: []
     expanded: 0
 --- !u!114 &8926484042661614981

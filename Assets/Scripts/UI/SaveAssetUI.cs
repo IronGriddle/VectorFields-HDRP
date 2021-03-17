@@ -17,8 +17,8 @@ public class SaveAssetUI : MonoBehaviour
             return;
         }
 
-        string name = vectorField.function3D.name;
-        AssetDatabase.CreateAsset(vectorField, "Assets/Textures/Texture3D/"+ name +". asset");
+        int name = Random.Range(0, 10000000);
+        AssetDatabase.CreateAsset(vectorField.texture3D, "Assets/Textures/Texture3D/"+ name +".asset");
     }
 
     //For use in UI
@@ -31,7 +31,7 @@ public class SaveAssetUI : MonoBehaviour
             return;
         }
 
-        string name = vectorField.function3D.name;
+        int name = Random.Range(0, 10000000);
         AssetDatabase.CreateAsset(vectorField.texture3D, "Assets/Textures/Texture3D/" + name + ".asset");
     }
 
@@ -44,8 +44,8 @@ public class SaveAssetUI : MonoBehaviour
             return;
         }
 
-        string name = vectorField.function3D.name;
-        AssetDatabase.CreateAsset(vectorField, "Assets/Textures/Texture3D/" + name + ". asset");
+        int name = Random.Range(0,10000000);
+        AssetDatabase.CreateAsset(vectorField.texture3D, "Assets/Textures/Texture3D/" + name + ".asset");
     }
 
 
