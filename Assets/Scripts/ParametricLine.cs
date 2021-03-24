@@ -8,6 +8,7 @@ using UnityEngine;
 //TODO: Clean up this class and remove inheritance from VectorField.
 public class ParametricLine : VectorField
 {
+    public PCacheCustom pCache;
     public Function3D delegate3D;
 
     public float tMin = 10;
@@ -19,6 +20,19 @@ public class ParametricLine : VectorField
         delegate3D.parameters = new List<string> {"t"};
     }
 
+    public void SavePCache()
+    {
+        pCache.Clear();
+
+        pCache.AddVector3Property("position");
+        pCache.AddVector3Property("velocity");
+
+        pCache.SetVector3Data("position", positions);
+        pCache.SetVector3Data("velocity", forces);
+
+        pCache.SaveToFile(Application.persistentDataPath + "/pCaches.pCache", PCacheCustom.Format.Ascii);
+
+    }
 
     //Positions are found in r(t) = <f(t),g(t),h(t)>
     //Velocity is calculated at r'(t) = <f'(t),g'(t),h'(t)>

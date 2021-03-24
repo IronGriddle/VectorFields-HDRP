@@ -9,7 +9,7 @@ public class Function3DTester : MonoBehaviour
     const bool SUCCESS = true;
     const bool FAILURE = false;
 
-
+    
 
     // Start is called before the first frame update
     void Start()
@@ -23,9 +23,19 @@ public class Function3DTester : MonoBehaviour
         Debug.Log("Testing Function 3D - Bounds: " + radiusOfCube);
         TestXYZ();
         TestVortex();
+        GenerateVortexPCache();
     }
 
+    public void SavePCache(List<Vector3> positions, List<Vector3> forces)
+    {
+        PCacheCustom pCache = new PCacheCustom();
+        pCache.AddVector3Property("position");
+        pCache.AddVector3Property("velocity");
+        pCache.SetVector3Data("position", positions);
+        pCache.SetVector3Data("velocity", forces);
+        pCache.SaveToFile("Assets/pointCache.pCache", PCacheCustom.Format.Ascii);
 
+    }
     private void TestXYZ()
     {
         //Setting Function 3D;
@@ -57,6 +67,44 @@ public class Function3DTester : MonoBehaviour
         }
 
         Debug.Log("XYZ Equation | Failed Tests: " + failedTests);
+    }
+
+    private void GenerateXYZPCache()
+    {
+        List<Vector3> positions = new List<Vector3>();
+        List<Vector3> forces = new List<Vector3>();
+
+        for (float z = -radiusOfCube; z < radiusOfCube; z++)
+        {
+            for (float y = -radiusOfCube; y < radiusOfCube; y++)
+            {
+                for (float x = -radiusOfCube; x < radiusOfCube; x++)
+                {
+                    positions.Add(new Vector3(x, y, z));
+                    forces.Add(function3D.CalculateAtVector3(XYZ_Expression(x, y, z)));
+                }
+            }
+        }
+        SavePCache(positions, forces);
+    }
+
+    private void GenerateVortexPCache()
+    {
+        List<Vector3> positions = new List<Vector3>();
+        List<Vector3> forces = new List<Vector3>();
+
+        for (float z = -radiusOfCube; z < radiusOfCube; z++)
+        {
+            for (float y = -radiusOfCube; y < radiusOfCube; y++)
+            {
+                for (float x = -radiusOfCube; x < radiusOfCube; x++)
+                {
+                    positions.Add(new Vector3(x,y,z));
+                    forces.Add(function3D.CalculateAtVector3(VortexExpression(x, y, z)));
+                }
+            }
+        }
+        SavePCache(positions, forces);
     }
 
     private void TestVortex()
@@ -102,16 +150,17 @@ public class Function3DTester : MonoBehaviour
             0
             );
     }
+
     private Vector3 XYZ_Expression(float x, float y,float z)
     {
         return new Vector3(x, y, z);
     }
 
 
-    bool floatEq(float f1, float f2, float percentTolerance = 5)
+    bool floatEqual(float f1, float f2, float percentTolerance = 5)
     {
         //Calculating percent error and checking if it passes tolerance.
-        if (Mathf.Abs((f1 - f2)/f1)*100 < percentTolerance)
+        if (Mathf.Abs((f1 - f2)/f2)*100 < percentTolerance)
         {
             return SUCCESS;
         }
@@ -129,7 +178,7 @@ public class Function3DTester : MonoBehaviour
             return SUCCESS;
         }
 
-        if (floatEq(v1.x, v2.x, percentTolerance) && (floatEq(v1.y, v2.y, percentTolerance)) && floatEq(v1.z, v2.z, percentTolerance))
+        if (floatEqual(v1.x, v2.x, percentTolerance) && (floatEqual(v1.y, v2.y, percentTolerance)) && floatEqual(v1.z, v2.z, percentTolerance))
         {
             return SUCCESS;
         }
