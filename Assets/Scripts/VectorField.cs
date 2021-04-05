@@ -100,9 +100,9 @@ public class VectorField : MonoBehaviour
     }
 
     //Calculate one octant of size, then multiply by 8 to return the amount to be calculated.
-    public int GetNCalculated()
+    public int GetNCalculated(int radiusFromCenterToCenter)
     {
-        return nonCubedResolution * nonCubedResolution * nonCubedResolution * 8;
+        return radiusFromCenterToCenter * radiusFromCenterToCenter * radiusFromCenterToCenter * 8;
     }
 
     //Update the Texture 3D describing this vector field.
