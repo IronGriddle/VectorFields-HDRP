@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -24,14 +22,14 @@ public class WorldGrid : MonoBehaviour
     
     public void SetPointInTexture3D(Vector3 point)
     {
-        Vector3Int index = Point2Index(point);
+        Vector3Int index = RoundedPoint(point);
         if (bounds.Contains(index))
         {
             texture3D.SetPixel(index.x, index.y, index.z, Color.white);
         }
     }
 
-    public static Vector3Int Point2Index(Vector3 point)
+    public static Vector3Int RoundedPoint(Vector3 point)
     {
         return new Vector3Int(Mathf.RoundToInt(point.x), Mathf.RoundToInt(point.y), Mathf.RoundToInt(point.z));
     }
