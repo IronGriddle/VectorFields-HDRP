@@ -114,9 +114,8 @@ MonoBehaviour:
   m_ImportDependencies: []
   m_GraphVersion: 6
   m_ResourceVersion: 1
-  m_saved: 1
-  m_SubgraphDependencies:
-  - {fileID: 5371698745253816930, guid: 4313b6ce2313f0b4d9e65949f9b33fce, type: 3}
+  m_saved: 0
+  m_SubgraphDependencies: []
   m_CategoryPath: Subgraph Block
 --- !u!114 &3
 MonoBehaviour:
@@ -157,7 +156,7 @@ MonoBehaviour:
       x: 842
       y: -971
       width: 661
-      height: 411
+      height: 459
     contents:
     - model: {fileID: 81}
       id: 0
@@ -2749,9 +2748,9 @@ MonoBehaviour:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children: []
-  m_UIPosition: {x: 965, y: -615}
+  m_UIPosition: {x: 901, y: -705}
   m_UICollapsed: 0
-  m_UISuperCollapsed: 1
+  m_UISuperCollapsed: 0
   m_InputSlots:
   - {fileID: 176}
   - {fileID: 177}
@@ -2785,7 +2784,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 0.2
+      m_SerializableObject: 0.08
     m_Space: 2147483647
   m_Property:
     name: min
@@ -3319,7 +3318,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 0.5
+      m_SerializableObject: 0.07
     m_Space: 2147483647
   m_Property:
     name: right
@@ -3384,7 +3383,7 @@ MonoBehaviour:
   m_InputSlots:
   - {fileID: 360}
   m_OutputSlots: []
-  m_Disabled: 0
+  m_Disabled: 1
   attribute: lifetime
   Composition: 2
   Source: 0

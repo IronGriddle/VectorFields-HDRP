@@ -8,7 +8,7 @@ public class PlaceCharge : MonoBehaviour
     [SerializeField]
     GameObject ObjectToBePlaced;
     
-    public UnityEvent OnPlace;
+    public UnityEvent<Vector3Int> OnPlace;
 
 
     // Start is called before the first frame update
@@ -34,11 +34,11 @@ public class PlaceCharge : MonoBehaviour
     bool placeIsRunning = false;
     IEnumerator Place(RaycastHit hit)
     {
+        Vector3Int pointPlaced = WorldGrid.RoundedPoint(hit.point + hit.normal / 2);
 
         placeIsRunning = true;
-
-        Instantiate(ObjectToBePlaced, WorldGrid.RoundedPoint(hit.point), Quaternion.identity);
-        OnPlace.Invoke();
+        Instantiate(ObjectToBePlaced, pointPlaced, Quaternion.identity);
+        OnPlace.Invoke(pointPlaced);
 
         yield return new WaitForSeconds(_placeCoolDown);
         placeIsRunning = false;

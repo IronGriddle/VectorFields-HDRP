@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HighlightPlacement : MonoBehaviour
 {
+    //The reason why this isn't packed in the same class as the HighlightDestruction.cs is because of the need to disable specific renderers.
     //Highlights where placement will be at the position of the mouse.
     // Start is called before the first frame update
 

@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/vectorFieldParticles.unity
     guid: 965e13dcbcc682641ad0c1a5fba7d141
+  - enabled: 1
+    path: Assets/Scenes/IndoorsScene.unity
+    guid: 0e8d604d0c1ef1b468bd28f6aff9d183
   m_configObjects: {}

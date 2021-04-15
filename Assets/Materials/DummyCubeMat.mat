@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: DummyCubeMat
-  m_Shader: {fileID: -6465566751694194690, guid: d361f22ef3cd2fa49bc02ab6c688c419,
+  m_Shader: {fileID: -6465566751694194690, guid: 4b48b828d95b1fc4a9fc4289efac86b1,
     type: 3}
   m_ShaderKeywords: _DISABLE_SSR_TRANSPARENT
   m_LightmapFlags: 4

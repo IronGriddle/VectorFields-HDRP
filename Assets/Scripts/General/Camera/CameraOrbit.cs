@@ -38,15 +38,15 @@ public class CameraOrbit : MonoBehaviour
             UnityEditor.EditorApplication.isPlaying = false;
 #endif
         }
-        // Lock cursor when right mouse button pressed
-        if (Input.GetMouseButtonDown(1))
+        // Lock cursor when middle mouse button pressed
+        if (Input.GetMouseButtonDown(2))
         {
             CameraControlDisabled = false;
             Cursor.lockState = CursorLockMode.Confined;
         }
 
-        // Unlock cursor when right mouse button released
-        if (Input.GetMouseButtonUp(1))
+        // Unlock cursor when middle mouse button released
+        if (Input.GetMouseButtonUp(2))
         {
             CameraControlDisabled = true;
             Cursor.visible = true;
@@ -60,6 +60,19 @@ public class CameraOrbit : MonoBehaviour
     void LateUpdate()
     {
 
+        //Zooming Input from our Mouse Scroll Wheel
+        if (Input.GetAxis("Mouse ScrollWheel") != 0f)
+        {
+            float ScrollAmount = Input.GetAxis("Mouse ScrollWheel") * ScrollSensitivity;
+
+            //Easing with magic number
+            ScrollAmount *= (CameraDistance * 0.3f);
+
+            CameraDistance += ScrollAmount * -1f;
+
+            CameraDistance = Mathf.Clamp(CameraDistance, 1.5f, 100f);
+        }
+
         if (!CameraControlDisabled)
         {
             //Rotation of the Camera based on Mouse Coordinates
@@ -72,18 +85,7 @@ public class CameraOrbit : MonoBehaviour
                 LocalRotation.y = Mathf.Clamp(LocalRotation.y, -90, 90);
             }
 
-            //Zooming Input from our Mouse Scroll Wheel
-            if (Input.GetAxis("Mouse ScrollWheel") != 0f)
-            {
-                float ScrollAmount = Input.GetAxis("Mouse ScrollWheel") * ScrollSensitivity;
 
-                //Easing with magic number
-                ScrollAmount *= (CameraDistance * 0.3f);
-
-                CameraDistance += ScrollAmount * -1f;
-
-                CameraDistance = Mathf.Clamp(CameraDistance, 1.5f, 100f);
-            }
         }
 
         //Actual Camera Rig Transformations

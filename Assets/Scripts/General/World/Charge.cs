@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Charge : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static string TAG = "Charge";
+    public float charge = 1f;
+
+    public Vector3 GetForceAtPoint(Vector3 point)
     {
-        
+        return charge / (transform.position - point).sqrMagnitude * Vector3.Normalize(point);
     }
 
-    // Update is called once per frame
-    void Update()
+    public float GetPotentialAtPoint(Vector3 point)
     {
-        
+        return charge / (transform.position - point).magnitude;
     }
+
 }
