@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BoundsSize : MonoBehaviour
 {
-    Bounds bounds;
+    public Bounds bounds;
     public Bounds paddedBounds;
     public float padding = 4f;
 
@@ -17,6 +17,7 @@ public class BoundsSize : MonoBehaviour
         UpdatePaddingSize();
         UpdateCubeSize();
     }
+
 
     void UpdatePaddingSize()
     {

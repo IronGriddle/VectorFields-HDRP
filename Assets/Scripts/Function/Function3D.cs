@@ -18,6 +18,13 @@ public class Function3D : MonoBehaviour
     public ExpressionDelegate yExpr;
     public ExpressionDelegate zExpr;
 
+    public void Awake()
+    {
+        SetExprX("x");
+        SetExprY("y");
+        SetExprZ("z");
+    }
+
     public void SetParameters(List<string> parameters)
     {
         this.parameters = parameters;
@@ -90,5 +97,18 @@ public class Function3D : MonoBehaviour
             return Vector3.zero;
         }
     }
+    public Vector3 CalculateAtVector3(Vector3Int position)
+    {
 
+
+        if (parameters.Count == 3)
+        {
+            return new Vector3((float)xExpr((float)position.x, (float)position.y, (float)position.z), (float)yExpr((float)position.x, (float)position.y, (float)position.z), (float)zExpr((float)position.x, (float)position.y, (float)position.z));
+        }
+        else
+        {
+            Debug.LogError("CalculateAtXYZ is calculating an expression with more or less than 3 parameters. Did you mean to use CalculateAtT()?");
+            return Vector3.zero;
+        }
+    }
 }

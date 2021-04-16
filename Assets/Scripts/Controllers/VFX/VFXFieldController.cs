@@ -23,8 +23,6 @@ public class VFXFieldController : MonoBehaviour
 
     public float intensity;
 
-
-
     void Start()
     {
         vectorField = GetComponent<VectorField>();
@@ -44,12 +42,8 @@ public class VFXFieldController : MonoBehaviour
 
     public void UpdateVectorField()
     {
-        vectorField.UpdateVectorField();
+        vectorField.SetTexture3D();
         vfx.SetTexture(VTexture3D, vectorField.texture3D);
-    }
-    public void SetTexture3DBounds(int size)
-    {
-        vectorField.nonCubedResolution = size;
     }
 
     public void SetIntensity(float newIntensity)

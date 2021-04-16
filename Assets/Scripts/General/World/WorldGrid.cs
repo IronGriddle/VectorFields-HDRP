@@ -5,40 +5,14 @@ public class WorldGrid : MonoBehaviour
 {
     [SerializeField]
     BoundsInt bounds;
-    Texture3D texture3D;
 
-
-    // Start is called before the first frame update
-    void Start()
+    public static BoundsInt RoundedBounds(Bounds bounds)
     {
-        texture3D = new Texture3D(bounds.xMax, bounds.zMax, bounds.yMax, TextureFormat.Alpha8, true);
+        return new BoundsInt(RoundedPoint(bounds.min), RoundedPoint(bounds.max));
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    
-    public void SetPointInTexture3D(Vector3 point)
-    {
-        Vector3Int index = RoundedPoint(point);
-        if (bounds.Contains(index))
-        {
-            texture3D.SetPixel(index.x, index.y, index.z, Color.white);
-        }
-    }
-
     public static Vector3Int RoundedPoint(Vector3 point)
     {
         return new Vector3Int(Mathf.RoundToInt(point.x), Mathf.RoundToInt(point.y), Mathf.RoundToInt(point.z));
-    }
-
-    //Save Texture 3D for debugging
-    private void OnApplicationQuit()
-    {
-        string name = System.DateTime.Now.ToLongTimeString();
-        AssetDatabase.CreateAsset(texture3D, "Assets/Scripts/General/World/Saves/" + name + ".asset");
     }
 
 
