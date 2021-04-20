@@ -59,7 +59,9 @@
     <Compile Include="Assets\Scripts\Function\Function3DTester.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
+    <Compile Include="Assets\Scripts\Controllers\ElectricFieldVFXController.cs" />
     <Compile Include="Assets\Texture3DPreview\Attributes\Texture3DPreviewAttribute.cs" />
+    <Compile Include="Assets\Scripts\Controllers\ChargeVFXController.cs" />
     <Compile Include="Assets\Scripts\Util\Vector3Double.cs" />
     <Compile Include="Assets\Scripts\Controllers\VFX\VFXParticleSettings.cs" />
     <Compile Include="Assets\Scripts\pCache\pCacheExporter.cs" />
@@ -73,6 +75,7 @@
     <Compile Include="Assets\Scripts\UI\SetUIColors.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
+    <Compile Include="Assets\Scripts\Controllers\VFX\VectorFieldVisualizationController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
     <Compile Include="Assets\Scripts\PointCharge.cs" />
@@ -90,9 +93,11 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\General\World\HighlighDestruction.cs" />
     <Compile Include="Assets\Scripts\VectorField.cs" />
+    <Compile Include="Assets\Scripts\Controllers\BuildVFXController.cs" />
     <Compile Include="Assets\Scripts\General\Player\CenterPlayerFromCharges.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
+    <Compile Include="Assets\Scripts\VectorFieldTutorialVideoCode.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
@@ -123,7 +128,6 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\Scripts\Controllers\VFX\VFXFieldController.cs" />
     <Compile Include="Assets\Scripts\Function\Function3D.cs" />
-    <Compile Include="Assets\ElectricFields\LineCharge.cs" />
     <Compile Include="Assets\Scripts\UI\SaveAssetUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
@@ -132,10 +136,11 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\Scripts\Util\VectorField_Exporter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
-    <Compile Include="Assets\Scripts\Controllers\ChargeVFXController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\BuildVFXController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\ElectricFieldVFXController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\VFX\VectorFieldVisualizationController.cs" />
+    <Compile Include="Assets\Scripts\Util\TextureUtils.cs" />
+    <Compile Include="Assets\Scripts\Util\Vector3Utils.cs" />
+    <Compile Include="Assets\Scripts\Util\PositionGenerator.cs" />
+    <Compile Include="Assets\Scripts\Util\ForceGenerator.cs" />
+    <Compile Include="Assets\Scripts\Controllers\VFX\VectorFieldVFXController.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />

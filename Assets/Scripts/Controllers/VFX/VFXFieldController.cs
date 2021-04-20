@@ -42,7 +42,7 @@ public class VFXFieldController : MonoBehaviour
 
     public void UpdateVectorField()
     {
-        vectorField.SetTexture3D();
+        vectorField.UpdateTexture3D();
         vfx.SetTexture(VTexture3D, vectorField.texture3D);
     }
 

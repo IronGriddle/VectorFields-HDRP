@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Threading.Tasks;
 using UnityEngine.Events;
+using UnityEditor;
 
 public class VectorField : MonoBehaviour
 {
@@ -17,20 +18,27 @@ public class VectorField : MonoBehaviour
 
     //Used to store Vector Field.
     public Texture3D texture3D;
-    
-    public BoundsInt boundsInt;
+    public Texture2D positionMap;
+    public Texture2D forceMap;
 
-    public TextureWrapMode m_WrapMode = TextureWrapMode.Clamp; //Clamping texture to prevent repetition
-    public FilterMode m_FilterMode = FilterMode.Trilinear;     //Trilinear for voxel interpolation.
-    public TextureFormat m_textureFormat = TextureFormat.RGBAFloat;
+    //Index of force : position should be the same.
+    //Used to store forces.
+    public List<Vector3> forces;
+    //Used to store positions.
+    public List<Vector3> positions;
 
-    public bool m_GenerateMipMaps = false;
-    public int m_AnisoLevel = 16;
+    public int Data_Size;
+
+    public Bounds bounds;
 
     private void Awake()
     {
 
-        boundsInt = new BoundsInt(-5, -5, -5, 5, 5, 5);
+        bounds = new Bounds();
+        bounds.min = new Vector3(-5, -5, -5);
+        bounds.max = new Vector3(5, 5, 5);
+
+        print(bounds.size);
 
         //Get the Function3D component attatched or generate if null.
         function3D = gameObject.GetComponent<Function3D>();
@@ -42,47 +50,65 @@ public class VectorField : MonoBehaviour
 
 
         //Initialize Texture3D to bounds and default parameters.
-        SetTexture3D();
+        UpdateTexture3D();
+
     }
 
-    //Calculate one octant of size, then multiply by 8 to return the amount to be calculated.
-    public int GetNCalculated()
+    private void Start()
     {
-        int count = 0;
-        foreach (var item in boundsInt.allPositionsWithin)
+    }
+
+    void UpdatePositions()
+    {
+        //List of positions to calculate force at
+        positions = new List<Vector3>();
+
+        //Generating and adding points to positions
+        positions = PositionGenerator.BoundsIntegerPositions(bounds);
+
+        positionMap = TextureUtils.Vector3List2Texture2D(positions);
+
+        Data_Size = positions.Count;
+    }
+    void UpdateForces()
+    {
+        forces = new List<Vector3>(new Vector3[positions.Count]);
+
+        //Calculate force at each voxel. 
+        //Using for loop to maintain position in list.
+
+        for (int i = 0; i < positions.Count; i++)
         {
-            count++;
+            forces[i] = function3D.CalculateAtVector3(positions[i]);
         }
-        return count;
+
+        //Parallel.For(0, positions.Count,
+        //    i =>
+        //    forces[i] = function3D.CalculateAtVector3(positions[i]));
+
+        forceMap = TextureUtils.Vector3List2Texture2D(forces);
     }
 
     //Update the Texture 3D describing this vector field.
-    public void SetTexture3D()
+    public void UpdateTexture3D()
     {
+        UpdatePositions();
+        UpdateForces();
         //Creating a new cubic Texture3D of proper size. 
-        texture3D = new Texture3D(boundsInt.xMax - boundsInt.xMin, boundsInt.yMax - boundsInt.yMin , boundsInt.zMax - boundsInt.zMin, m_textureFormat, m_GenerateMipMaps);
-        texture3D.wrapMode = m_WrapMode;       //TextureWrapMode.Clamp
-        texture3D.filterMode = m_FilterMode;   //FilterMode.Trilinear
-        texture3D.anisoLevel = m_AnisoLevel;   //1 
-        //Iterating over each integer point in bounds.
-        foreach (Vector3Int pos in boundsInt.allPositionsWithin)
-        {
-            //Filling Color array with forces
-            Vector3 force = function3D.CalculateAtVector3(pos);
-            Color c = new Color(force.x, force.y, force.z, 1);
-            texture3D.SetPixel(pos.x + Mathf.Abs(boundsInt.xMin), pos.y + Mathf.Abs(boundsInt.yMin), pos.z + Mathf.Abs(boundsInt.zMin), c);
-
-            //Updating minimum value.
-            minimumMagnitude = Mathf.Min(minimumMagnitude, force.magnitude);
-            maximumMagnitude = Mathf.Max(maximumMagnitude, force.magnitude);
-
-        }
-
-        texture3D.Apply(true);
+        texture3D = TextureUtils.PositionsAndForces2Texture3D(positions, forces);
 
         UpdatedTexture3D.Invoke(texture3D);
     }
+    
+    public void SaveAll()
+    {
+        int id = Random.Range(0, 10000000);
 
+        AssetDatabase.CreateAsset(texture3D, Application.dataPath + "/Generated/fieldTexture" + id + ".asset");
+        AssetDatabase.CreateAsset(positionMap, Application.dataPath + "/Generated/positionMap" + id + ".asset");
+        AssetDatabase.CreateAsset(forceMap, Application.dataPath +  "/Generated/forceMap" + id + ".asset");
+
+    }
 
 
 }

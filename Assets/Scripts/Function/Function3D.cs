@@ -7,27 +7,20 @@ public class Function3D : MonoBehaviour
 
     //Should any error occur during parsing., it will be accessible from here.
     public string Error = "";
+    public string[] parameters;
 
-    //Possible parameters, eg f(t) or f(x,y,z)
-    //Default is x y z. Should be more than enough. Unused parameters will be ignored.
-    //If a specified parameter does not exist in an equation it will be ignored.
-    //Thus, f(t) and f(x,y,z) can be used.
-    public List<string> parameters = new List<string> {"x", "y", "z"};
-
+    ExpressionParser parser = new ExpressionParser();
     public ExpressionDelegate xExpr;
     public ExpressionDelegate yExpr;
     public ExpressionDelegate zExpr;
 
     public void Awake()
     {
-        SetExprX("x");
-        SetExprY("y");
-        SetExprZ("z");
-    }
+        parameters = new string[] {"x", "y", "z"};
 
-    public void SetParameters(List<string> parameters)
-    {
-        this.parameters = parameters;
+        SetExprX("(-y)/(x^2+y^2)");
+        SetExprY("(x)/(x^2+y^2)");
+        SetExprZ("0");
     }
 
     //Set the xExpr delegate with the proper string. eg : "sin(x) + cos(y)"
@@ -35,7 +28,7 @@ public class Function3D : MonoBehaviour
     {
         try
         {
-            xExpr = Expression.Parse(expression).ToDelegate(parameters.ToArray());
+            xExpr = Expression.Parse(expression).ToDelegate(parameters);
         }
         catch (ExpressionParser.ParseException exception)//Should an error occur, set the expression equal to 0.
         {
@@ -48,7 +41,7 @@ public class Function3D : MonoBehaviour
     {
         try
         {
-            yExpr = Expression.Parse(expression).ToDelegate(parameters.ToArray());
+            yExpr = Expression.Parse(expression).ToDelegate(parameters);
         }
         catch (ExpressionParser.ParseException exception)
         {
@@ -61,7 +54,7 @@ public class Function3D : MonoBehaviour
     {
         try
         {
-            zExpr = Expression.Parse(expression).ToDelegate(parameters.ToArray());
+            zExpr = Expression.Parse(expression).ToDelegate(parameters);
         }
         catch (ExpressionParser.ParseException exception) 
         {
@@ -69,46 +62,26 @@ public class Function3D : MonoBehaviour
         }
     }
 
+
+
     //Calculates at a number.
     //Given that the number of parameters defined is one. Eg: f(x) 
-    public Vector3 CalculateAtT(float t)
-    {
-        if (parameters.Count == 1)
-        {
-            return new Vector3((float)xExpr(t), (float)yExpr(t), (float)zExpr(t));
-        }
-        else
-        {
-            Debug.LogWarning("CalculateAtT() is calculating an expression with more than one parameter and will calculate t for the first parameter.  did you mean to use CalculateAtXYZ?");
-            return new Vector3((float)xExpr(t), (float)yExpr(t), (float)zExpr(t));
-        }
-    }
 
     //Calculates at a position given that the number of parameters is three. Eg: f(x,y,z)
     public Vector3 CalculateAtVector3(Vector3 position)
     {
-        if (parameters.Count == 3)
-        { 
-            return new Vector3((float)xExpr(position.x, position.y, position.z), (float)yExpr(position.x, position.y, position.z), (float)zExpr(position.x, position.y, position.z));
-        }
-        else
-        {
-            Debug.LogError("CalculateAtXYZ is calculating an expression with more or less than 3 parameters. Did you mean to use CalculateAtT()?");
-            return Vector3.zero;
-        }
-    }
-    public Vector3 CalculateAtVector3(Vector3Int position)
-    {
+        double x = position.x;
+        double y = position.y;
+        double z = position.z;
+
+        double[] param = new double[] { x, y, z };
+
+        float xValue = (float)xExpr(param);
+        float yValue = (float)yExpr(param);
+        float zValue = (float)zExpr(param);
+
+        return new Vector3(xValue, yValue, zValue);
 
 
-        if (parameters.Count == 3)
-        {
-            return new Vector3((float)xExpr((float)position.x, (float)position.y, (float)position.z), (float)yExpr((float)position.x, (float)position.y, (float)position.z), (float)zExpr((float)position.x, (float)position.y, (float)position.z));
-        }
-        else
-        {
-            Debug.LogError("CalculateAtXYZ is calculating an expression with more or less than 3 parameters. Did you mean to use CalculateAtT()?");
-            return Vector3.zero;
-        }
     }
 }
