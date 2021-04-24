@@ -34,6 +34,7 @@ public class VectorFieldVisualizationController : MonoBehaviour
     {
         while (true)
         {
+            SetDataSize();
             SetForces();
             SetPositions();
             yield return new WaitForSeconds(1f);
@@ -51,4 +52,8 @@ public class VectorFieldVisualizationController : MonoBehaviour
         vfx.SetTexture("Positions", vectorField.positionMap);
     }
 
+    void SetDataSize()
+    {
+        vfx.SetInt("Data_Size", vectorField.GetDataSize());
+    }
 }

@@ -9,38 +9,54 @@ public class ElectricField : MonoBehaviour
 
     //RGB corresponds to the field
     //A corresponds to potential at that point
+
+    //Index of force : position should be the same.
+    //Used to store forces and voltages.
+    public List<Vector3> forces;
+    //Used to store positions.
+    public List<Vector3> positionsCalculatedAt;
+    //Used to store voltages.
+    public List<float> voltages;
+
+    //Used to store Vector Field.
     public Texture3D fieldTexture;
-    public int count; //number of pixels stored inside of fieldTexture. Created from bounds.
+    public Texture2D positionsCalculatedAtMap;
+    public Texture2D forceMap;
+    public Texture2D voltageMap;
+
+    public int Data_Count; //number of pixels stored inside of fieldTexture. Created from bounds.
+
+    BoundsSize boundsSize;
     Bounds bounds;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         UpdateChargeList();
+        boundsSize = FindObjectOfType<BoundsSize>();
+        UpdatePositions();
+        UpdateForces();
+        UpdateVoltages();
+        UpdateTexture3D();
+        Data_Count = GetDataSize();
+        StartCoroutine(DelayedUpdate());
     }
 
-    public float updatePeriod = 4f;
+
+    public float updatePeriod = 0.5f;
     public bool updateRunning = true;
     IEnumerator DelayedUpdate()
     {
         while (updateRunning)
         {
+            print("updating");
             UpdateChargeList();
-            SetTextureFromBounds();
-            count = GetNCalculated();
+            UpdatePositions();
+            UpdateForces();
+            UpdateVoltages();
+            UpdateTexture3D();
+            Data_Count = GetDataSize();
             yield return new WaitForSeconds(updatePeriod);
         }
-    }
-
-    public int GetNCalculated()
-    {
-        BoundsInt boundsInt = WorldGrid.RoundedBounds(bounds);
-        int count = 0;
-        foreach (var item in boundsInt.allPositionsWithin)
-        {
-            count++;
-        }
-        return count;
     }
 
     public void UpdateChargeList()
@@ -54,28 +70,65 @@ public class ElectricField : MonoBehaviour
         }
     }
 
-    public void SetTextureFromBounds()
+    public int GetDataSize()
     {
-        BoundsInt boundsInt = WorldGrid.RoundedBounds(bounds);
-
-        //Setting texture 3d bounds. Note that zMax - zMin is in the middle parameter due to computer based coordinates.
-        Texture3D texture = new Texture3D(boundsInt.xMax - boundsInt.xMin, boundsInt.zMax - boundsInt.zMin, boundsInt.yMax - boundsInt.yMin, TextureFormat.RGBAFloat, true);
-
-        foreach (Vector3Int position in boundsInt.allPositionsWithin)
-        {
-            Vector3 force = NetForceAtPoint(position);
-            float potential = NetPotentialAtPoint(position);
-            Color dataPixel = new Color(force.x,force.y,force.z, potential);
-            texture.SetPixel(position.x, position.y, position.z, dataPixel);
-        }
-        texture.Apply(true);
-
-        fieldTexture = texture;
+        return positionsCalculatedAt.Count;
     }
 
+    void UpdatePositions()
+    {
+        //List of positions to calculate force at
+        positionsCalculatedAt = new List<Vector3>();
+
+        //Updating bounds;
+        bounds = boundsSize.paddedBounds;
+
+        //Generating and adding points to positions
+        positionsCalculatedAt = PositionGenerator.BoundsIntegerPositions(bounds);
+
+        positionsCalculatedAtMap = TextureUtils.Vector3List2Texture2D(positionsCalculatedAt, true);
+    }
+
+    void UpdateForces()
+    {
+        forces = new List<Vector3>();
+
+        //Calculate force at each voxel. 
+        //Using for loop to maintain position in list.
+
+        for (int i = 0; i < positionsCalculatedAt.Count; i++)
+        {
+            forces.Add(NetForceAtPoint(positionsCalculatedAt[i]));
+        }
+
+        //Parallel.For(0, positions.Count,
+        //    i =>
+        //    forces[i] = function3D.CalculateAtVector3(positions[i]));
+
+        forceMap = TextureUtils.Vector3List2Texture2D(forces, true);
+    }
+
+    void UpdateVoltages()
+    {
+        voltages = new List<float>();
+
+        for (int i = 0; i < positionsCalculatedAt.Count; i++)
+        {
+            voltages.Add(NetPotentialAtPoint(positionsCalculatedAt[i]));
+        }
+        voltageMap = TextureUtils.FloatList2Texture2D(voltages, true);
+    }
+
+    public void UpdateTexture3D()
+    {
+        fieldTexture = TextureUtils.PositionsAndForces2Texture3D(positionsCalculatedAt, forces);
+    }
+
+ 
     Vector3 NetForceAtPoint(Vector3 point)
     {
         Vector3 netCharge = Vector3.zero;
+
 
         foreach (Charge charge in Charges)
         {
@@ -92,29 +145,6 @@ public class ElectricField : MonoBehaviour
             netCharge += charge.GetPotentialAtPoint(point);
         }
         return netCharge;
-    }
-
-    //It might be better to do this with alpha culling in unity vfx graph.
-    Vector3Int[] GetPositionsAtPotential(float potential, float threshold)
-    {
-        if (fieldTexture == null)
-            return null;
-
-        List<Vector3Int> positions = new List<Vector3Int>();
-        BoundsInt boundsInt = WorldGrid.RoundedBounds(bounds);
-
-
-        foreach (Vector3Int checkedPosition in boundsInt.allPositionsWithin)
-        {
-            Color color = fieldTexture.GetPixel(checkedPosition.x, checkedPosition.y, checkedPosition.z);
-            
-            if (color.a < threshold && threshold > color.a)
-            {
-                positions.Add(checkedPosition);
-            }
-        
-        }
-        return positions.ToArray();
     }
 
 

@@ -10,6 +10,9 @@ public class Function3D : MonoBehaviour
     public string[] parameters;
 
     ExpressionParser parser = new ExpressionParser();
+
+    //Some weird memory thing going on.
+    private ExpressionDelegate reset;
     public ExpressionDelegate xExpr;
     public ExpressionDelegate yExpr;
     public ExpressionDelegate zExpr;
@@ -18,9 +21,12 @@ public class Function3D : MonoBehaviour
     {
         parameters = new string[] {"x", "y", "z"};
 
+
+        reset = Expression.Parse("0").ToDelegate(parameters);
+        //Default vortex.
         SetExprX("(-y)/(x^2+y^2)");
         SetExprY("(x)/(x^2+y^2)");
-        SetExprZ("0");
+        SetExprZ("1/(x^2+y^2+z^2)");
     }
 
     //Set the xExpr delegate with the proper string. eg : "sin(x) + cos(y)"
@@ -28,9 +34,15 @@ public class Function3D : MonoBehaviour
     {
         try
         {
+            if (string.IsNullOrEmpty(expression))
+            {
+                expression = "0";
+            }
+
+            xExpr = reset;
             xExpr = Expression.Parse(expression).ToDelegate(parameters);
         }
-        catch (ExpressionParser.ParseException exception)//Should an error occur, set the expression equal to 0.
+        catch (ExpressionParser.ParseException exception) 
         {
             Error = exception.ToString();
         }
@@ -41,6 +53,11 @@ public class Function3D : MonoBehaviour
     {
         try
         {
+            if (string.IsNullOrEmpty(expression))
+            {
+                expression = "0";
+            }
+            yExpr = reset;
             yExpr = Expression.Parse(expression).ToDelegate(parameters);
         }
         catch (ExpressionParser.ParseException exception)
@@ -54,13 +71,20 @@ public class Function3D : MonoBehaviour
     {
         try
         {
+            if (string.IsNullOrEmpty(expression) || string.IsNullOrWhiteSpace(expression))
+            {
+                expression = "0";
+            }
+
+            zExpr = reset;
             zExpr = Expression.Parse(expression).ToDelegate(parameters);
         }
-        catch (ExpressionParser.ParseException exception) 
+        catch (ExpressionParser.ParseException exception)
         {
             Error = exception.ToString();
         }
     }
+
 
 
 
@@ -74,11 +98,13 @@ public class Function3D : MonoBehaviour
         double y = position.y;
         double z = position.z;
 
+
         double[] param = new double[] { x, y, z };
 
         float xValue = (float)xExpr(param);
         float yValue = (float)yExpr(param);
         float zValue = (float)zExpr(param);
+
 
         return new Vector3(xValue, yValue, zValue);
 

@@ -9,7 +9,7 @@ public class BoundsSize : MonoBehaviour
     public float padding = 4f;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         //initializing bounds to render with a decent size.
         bounds.min = -Vector3.one*2;
@@ -18,6 +18,10 @@ public class BoundsSize : MonoBehaviour
         UpdateCubeSize();
     }
 
+    public void SetPaddingSize(float newPaddingSize)
+    {
+        padding = newPaddingSize;
+    }
 
     void UpdatePaddingSize()
     {
@@ -84,7 +88,6 @@ public class BoundsSize : MonoBehaviour
     }
 
     //ACCESSED FROM EDITOR
-    //Increases the size of the bounds.
     public void _OnPlace(Vector3Int position)
     {
         bounds.Encapsulate(position);
@@ -92,7 +95,6 @@ public class BoundsSize : MonoBehaviour
         UpdatePaddingSize();
         UpdateCubeSize();
     }
-
 
     public void _OnDestroy()
     {
@@ -107,5 +109,13 @@ public class BoundsSize : MonoBehaviour
         UpdatePaddingSize();
         UpdateCubeSize();
     }
+
+    public void UpdateBounds()
+    {
+        UpdatePaddingSize();
+        UpdateCubeSize();
+
+    }
+
 
 }

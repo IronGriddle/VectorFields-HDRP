@@ -14,4 +14,13 @@ public class Vector3Utils : MonoBehaviour
         return new Color(color.x, color.y, color.z, alpha);
     }
 
+    public static Vector3 ClampMinMax(Vector3 input,  Vector3 min, Vector3 max)
+    {
+        float x = Mathf.Clamp(input.x, min.x, max.x);
+        float y = Mathf.Clamp(input.y, min.y, max.y);
+        float z = Mathf.Clamp(input.z, min.z, max.z);
+
+        return new Vector3(x, y, z);
+
+    }
 }

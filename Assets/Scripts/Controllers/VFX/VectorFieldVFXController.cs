@@ -20,18 +20,31 @@ public class VectorFieldVFXController : MonoBehaviour
         StartCoroutine(DelayedUpdate());
     }
 
+    public void SetParticleIntensity(float force)
+    {
+        vfx.SetFloat("Intensity", force);
+    }
 
+    public void SetColor(Color color)
+    {
+        vfx.SetVector3("Color", new Vector3(color.r, color.g, color.b));
+    }
+
+    public void SetParticleSize(float force)
+    {
+        vfx.SetFloat("Particle_Size", force);
+    }
 
     IEnumerator DelayedUpdate()
     {
         while (true)
         {
+            SetDataSize();
             SetBounds();
             SetTexture3D();
             yield return new WaitForSeconds(1f);
         }
     }
-
 
     void SetTexture3D()
     {
@@ -44,6 +57,9 @@ public class VectorFieldVFXController : MonoBehaviour
         vfx.SetVector3("Size", vectorField.bounds.size);
     }
 
-
+    void SetDataSize()
+    {
+        vfx.SetInt("Data_Size", vectorField.Data_Size);
+    }
 
 }

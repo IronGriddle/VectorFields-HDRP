@@ -2,8 +2,10 @@
 using UnityEngine;
 using System.Threading.Tasks;
 using UnityEngine.Events;
-using UnityEditor;
 
+
+
+//TODO: De-associate texture3D, texture 2D, and bounds by refactoring into another class
 public class VectorField : MonoBehaviour
 {
     public UnityEvent<Texture3D> UpdatedTexture3D;
@@ -12,9 +14,6 @@ public class VectorField : MonoBehaviour
     //Also contains inner functions which can be manipulated.
     public Function3D function3D;
 
-    //Used in coloring VFX
-    public float maximumMagnitude;
-    public float minimumMagnitude;
 
     //Used to store Vector Field.
     public Texture3D texture3D;
@@ -33,12 +32,9 @@ public class VectorField : MonoBehaviour
 
     private void Awake()
     {
-
-        bounds = new Bounds();
         bounds.min = new Vector3(-5, -5, -5);
         bounds.max = new Vector3(5, 5, 5);
 
-        print(bounds.size);
 
         //Get the Function3D component attatched or generate if null.
         function3D = gameObject.GetComponent<Function3D>();
@@ -53,10 +49,7 @@ public class VectorField : MonoBehaviour
         UpdateTexture3D();
 
     }
-
-    private void Start()
-    {
-    }
+    
 
     void UpdatePositions()
     {
@@ -67,9 +60,13 @@ public class VectorField : MonoBehaviour
         positions = PositionGenerator.BoundsIntegerPositions(bounds);
 
         positionMap = TextureUtils.Vector3List2Texture2D(positions);
-
-        Data_Size = positions.Count;
     }
+
+    public int GetDataSize()
+    {
+        return positions.Count;
+    }
+
     void UpdateForces()
     {
         forces = new List<Vector3>(new Vector3[positions.Count]);
@@ -92,6 +89,7 @@ public class VectorField : MonoBehaviour
     //Update the Texture 3D describing this vector field.
     public void UpdateTexture3D()
     {
+        Data_Size = GetDataSize();
         UpdatePositions();
         UpdateForces();
         //Creating a new cubic Texture3D of proper size. 
@@ -100,15 +98,6 @@ public class VectorField : MonoBehaviour
         UpdatedTexture3D.Invoke(texture3D);
     }
     
-    public void SaveAll()
-    {
-        int id = Random.Range(0, 10000000);
-
-        AssetDatabase.CreateAsset(texture3D, Application.dataPath + "/Generated/fieldTexture" + id + ".asset");
-        AssetDatabase.CreateAsset(positionMap, Application.dataPath + "/Generated/positionMap" + id + ".asset");
-        AssetDatabase.CreateAsset(forceMap, Application.dataPath +  "/Generated/forceMap" + id + ".asset");
-
-    }
-
+ 
 
 }

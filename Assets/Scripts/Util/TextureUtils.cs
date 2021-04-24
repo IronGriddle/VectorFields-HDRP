@@ -5,9 +5,63 @@ using UnityEngine;
 public class TextureUtils : MonoBehaviour
 {
 
+    //1D array Rfloat
+    public static Texture2D FloatList2Texture2D(List<float> floats)
+    {
+        Texture2D texture2D = new Texture2D(floats.Count, 1, TextureFormat.RFloat, false);
+
+
+        Color[] colors = new Color[floats.Count];
+        for (int i = 0; i < floats.Count; i++)
+        {
+            colors[i] = new Color(floats[i],0,0);
+        }
+
+        texture2D.filterMode = FilterMode.Point;
+        texture2D.wrapMode = TextureWrapMode.Clamp;
+        texture2D.SetPixels(colors);
+
+        texture2D.Apply();
+
+        return texture2D;
+    }
+    //2D array
+    public static Texture2D FloatList2Texture2D(List<float> floats, bool is2D = true)
+    {
+        if (!is2D){
+            return FloatList2Texture2D(floats);
+        }
+
+
+        int size = Mathf.CeilToInt(Mathf.Sqrt(floats.Count));
+
+        Texture2D texture2D = new Texture2D(size, size, TextureFormat.RFloat, false);
+
+
+        Color[] colors = new Color[size * size];
+        for (int i = 0; i < floats.Count; i++)
+        {
+            colors[i] = new Color(floats[i], 0, 0);
+        }
+
+        texture2D.filterMode = FilterMode.Point;
+        texture2D.wrapMode = TextureWrapMode.Clamp;
+        texture2D.SetPixels(colors);
+
+        texture2D.Apply();
+
+        return texture2D;
+    }
+
+
+
     //1D array
     public static Texture2D Vector3List2Texture2D(List<Vector3> vectors)
     {
+
+
+
+
         Texture2D texture2D = new Texture2D(vectors.Count, 1, TextureFormat.RGBAFloat, false);
 
 
@@ -26,6 +80,33 @@ public class TextureUtils : MonoBehaviour
         return texture2D;
     }
 
+    //2D array
+    public static Texture2D Vector3List2Texture2D(List<Vector3> vectors, bool is2D = true)
+    {
+        if (!is2D)
+        {
+            return Vector3List2Texture2D(vectors);
+        }
+
+        int size = Mathf.CeilToInt(Mathf.Sqrt(vectors.Count));
+
+        Texture2D texture2D = new Texture2D(size, size, TextureFormat.RGBAFloat, false);
+
+        Color[] colors = new Color[size * size];
+        for (int i = 0; i < vectors.Count; i++)
+        {
+            colors[i] = Vector3Utils.V3Color(vectors[i]);
+        }
+
+
+        texture2D.filterMode = FilterMode.Point;
+        texture2D.wrapMode = TextureWrapMode.Clamp;
+        texture2D.SetPixels(colors);
+
+        texture2D.Apply();
+
+        return texture2D;
+    }
 
 
 

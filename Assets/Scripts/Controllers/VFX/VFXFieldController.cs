@@ -12,7 +12,7 @@ public class VFXFieldController : MonoBehaviour
 
     //The class VectorField creates its Texture3D with its expressions and positions.
     //The class VisualEffect describes the actual particles moving around.
-    private VectorField vectorField;
+    public VectorField vectorField;
     private VisualEffect vfx;
 
     public float playRate = 1f;

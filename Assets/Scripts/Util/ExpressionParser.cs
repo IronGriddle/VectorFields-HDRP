@@ -29,6 +29,29 @@ using System.Linq;
 using System.Collections.Generic;
 
 
+/* * * * * * * * * * * * * *
+ * A simple expression parser
+ * --------------------------
+ * 
+ * The parser can parse a mathematical expression into a simple custom
+ * expression tree. It can recognise methods and fields/contants which
+ * are user extensible. It can also contain expression parameters which
+ * are registrated automatically. An expression tree can be "converted"
+ * into a delegate.
+ * 
+ * Written by Bunny83
+ * 2014-11-02
+ * 
+ * Features:
+ * - Elementary arithmetic [ + - * / ]
+ * - Power [ ^ ]
+ * - Brackets ( )
+ * - Most function from System.Math (abs, sin, round, floor, min, ...)
+ * - Constants ( e, PI )
+ * - MultiValue return (quite slow, produce extra garbage each call)
+ * 
+ * * * * * * * * * * * * * */
+
 namespace B83.ExpressionParser
 {
     public interface IValue
@@ -209,14 +232,6 @@ namespace B83.ExpressionParser
 
     public class Expression : IValue
     {
-
-        //Custom cast
-        public static explicit operator Expression(string aExpression)
-        {
-            return new ExpressionParser().EvaluateExpression(aExpression);
-        }
-
-
         public Dictionary<string, Parameter> Parameters = new Dictionary<string, Parameter>();
         public IValue ExpressionTree { get; set; }
         public double Value

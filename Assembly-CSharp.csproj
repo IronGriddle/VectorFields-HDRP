@@ -56,6 +56,7 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Util\Vector3Utils.cs" />
     <Compile Include="Assets\Scripts\Function\Function3DTester.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
@@ -72,7 +73,8 @@
     <Compile Include="Assets\Scripts\General\World\ChargeHighlight.cs" />
     <Compile Include="Assets\Scripts\General\World\ElectricField.cs" />
     <Compile Include="Assets\Scripts\General\World\BoundsHighlight.cs" />
-    <Compile Include="Assets\Scripts\UI\SetUIColors.cs" />
+    <Compile Include="Assets\Scripts\Util\PositionGenerator.cs" />
+    <Compile Include="Assets\Scripts\UI\SetSliderColors.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
     <Compile Include="Assets\Scripts\Controllers\VFX\VectorFieldVisualizationController.cs" />
@@ -109,14 +111,18 @@
     <Compile Include="Assets\Scripts\General\Player\Charger.cs" />
     <Compile Include="Assets\Scripts\Util\Texture3DPreviewInInspector.cs" />
     <Compile Include="Assets\Scripts\Util\ExprUtils.cs" />
+    <Compile Include="Assets\Scripts\UI\MinMaxDisplay.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
+    <Compile Include="Assets\Scripts\Controllers\VFX\VectorFieldVFXController.cs" />
+    <Compile Include="Assets\Scripts\Util\TextureUtils.cs" />
+    <Compile Include="Assets\Scripts\Util\ForceGenerator.cs" />
     <Compile Include="Assets\Scripts\Function\Function3D_Exporter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\Scripts\General\Player\DestroyCharge.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\Scripts\Util\ExpressionParser.cs" />
-    <Compile Include="Assets\Scripts\UI\UIColorHandle.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
+    <Compile Include="Assets\Scripts\Controllers\VFX\ElectricFieldStaticController.cs" />
     <Compile Include="Assets\Scripts\General\Camera\FixedCameraController.cs" />
     <Compile Include="Assets\Scripts\pCache\PCacheCustom.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
@@ -134,13 +140,8 @@
     <Compile Include="Assets\Scripts\ErrorListener.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
-    <Compile Include="Assets\Scripts\Util\VectorField_Exporter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
-    <Compile Include="Assets\Scripts\Util\TextureUtils.cs" />
-    <Compile Include="Assets\Scripts\Util\Vector3Utils.cs" />
-    <Compile Include="Assets\Scripts\Util\PositionGenerator.cs" />
-    <Compile Include="Assets\Scripts\Util\ForceGenerator.cs" />
-    <Compile Include="Assets\Scripts\Controllers\VFX\VectorFieldVFXController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\VFX\ElectricFieldDynamicController.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
